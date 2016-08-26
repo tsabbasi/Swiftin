@@ -38,11 +38,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         setupCollectionViewCells()
+        setupViews()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    func setupViews() {
+        updateQuantityLabel()
+        updateBalanceLabel()
     }
     
     // MARK: - UICollectionView 
@@ -73,8 +80,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         updateCellBackgroundColor(indexPath, selected: true)
-        
+        reset()
         currentSelection = vendingMachine.selection[indexPath.row]
+        updateTotalPriceLabel()
+        
         
     }
     
@@ -97,5 +106,52 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     // MARK: - Helper Methods
+    
+    @IBAction func purchase() {
+        if let currentSelection = currentSelection {
+            do {
+                try vendingMachine.vend(currentSelection, quantity: quantity)
+                updateBalanceLabel()
+                
+                
+            } catch {
+                // FIXME: Error Handling Code!!!
+            }
+            
+        } else {
+            // FIXME: Alert user to no selection
+        }
+    }
+    
+    @IBAction func updateQuantity(sender: UIStepper) {
+        quantity = sender.value
+        updateTotalPriceLabel()
+        updateQuantityLabel()
+    }
+    
+    func updateTotalPriceLabel() {
+        if let currentSelection = currentSelection, let item = vendingMachine.itemForCurrentSelection(currentSelection) {
+            totalLabel.text = "\(item.price * quantity)"
+        }
+        
+    }
+    
+    func updateQuantityLabel() {
+        quantityLabel.text = "\(quantity)"
+    }
+    
+    
+    func updateBalanceLabel() {
+        balanceLabel.text = "$\(vendingMachine.amountDeposited)"
+    }
+    
+    func reset() {
+        quantity = 1
+        updateTotalPriceLabel()
+        updateQuantityLabel()
+    }
+    
+    
+    
 }
 
