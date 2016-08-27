@@ -155,7 +155,7 @@ class VendingMachine: VendingMachineType {
         } else {
             
             let amountRequired = totalPrice - amountDeposited
-            VendingMachineError.InsufficientFunds(required: amountRequired)
+            throw VendingMachineError.InsufficientFunds(required: amountRequired)
         }
     }
     

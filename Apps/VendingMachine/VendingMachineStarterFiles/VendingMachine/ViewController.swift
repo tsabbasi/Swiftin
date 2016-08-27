@@ -112,10 +112,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             do {
                 try vendingMachine.vend(currentSelection, quantity: quantity)
                 updateBalanceLabel()
-                
-                
-            } catch {
-                // FIXME: Error Handling Code!!!
+            } catch VendingMachineError.OutOfStock {
+                showAlert("Out of Stock")
+            } catch VendingMachineError.InvalidSelection {
+                showAlert("Invalid Selection")
+                //we save the associate value in the amount constant, the associate value is calculated in the vend func
+            } catch VendingMachineError.InsufficientFunds(required: let amount) {
+                showAlert("Insufficient Funds", alertMessage: "Additional $\(amount) needed to complete the transition")
+            } catch let error {
+                fatalError("\(error)")
             }
             
         } else {
@@ -151,6 +156,20 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         updateQuantityLabel()
     }
     
+    func showAlert(alertTitle: String, alertMessage: String? = nil, alertStyle: UIAlertControllerStyle = .Alert) {
+ 
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: alertStyle)
+        
+        let okAction = UIAlertAction(title: "OK", style: .Default, handler: dismissAlert)
+        
+        alertController.addAction(okAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func dismissAlert(sender: UIAlertAction) {
+        reset()
+    }
     
     
 }
