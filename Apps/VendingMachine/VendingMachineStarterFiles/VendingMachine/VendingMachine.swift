@@ -43,12 +43,13 @@ enum VendingMachineError: ErrorType {
     case InvalidSelection
     case OutOfStock
     case InsufficientFunds(required: Double)
-    
 }
+
 
 // Helper Classes
 
 class PlistConverter {
+    
     class func dictionaryFromFile(resource: String, ofType type: String) throws -> [String: AnyObject] {
         
         guard let path = NSBundle.mainBundle().pathForResource(resource, ofType: type) else {
@@ -65,17 +66,19 @@ class PlistConverter {
 
 
 class InventoryUnarchiver {
+    
     class func vendingInventoryFromDictionary(dictionary: [String: AnyObject]) throws -> [VendingSelection: ItemType] {
         
         var inventory: [VendingSelection: ItemType] = [:]
         
         for (key, value) in dictionary {
+            
             if let itemDict = value as? [String: Double], let price = itemDict["price"], let quantity = itemDict["quantity"] {
                 
                 let item = VendingItem(price: price, quantitiy: quantity)
                 
-                
                 guard let key = VendingSelection(rawValue: key) else {
+                    
                     throw InventoryError.InvalidKey
                 }
                 
@@ -105,9 +108,13 @@ enum VendingSelection: String {
     case Gum
     
     func icon() -> UIImage {
+        
         if let image = UIImage(named: self.rawValue) {
+            
             return image
+            
         } else {
+            
             return UIImage(named: "Default")!
         }
     }
@@ -121,23 +128,24 @@ struct VendingItem: ItemType {
 
 
 class VendingMachine: VendingMachineType {
+    
     let selection: [VendingSelection] = [.Soda, .DietSoda, .Chips, .Cookie, .Sandwich, .Wrap, .CandyBar, .PopTart, .Water, .FruitJuice, .SportsDrink, .Gum]
     var inventory: [VendingSelection : ItemType]
     var amountDeposited: Double = 10.0
     
     required init(inventory: [VendingSelection : ItemType]) {
+        
         self.inventory = inventory
     }
     
     func vend(selection: VendingSelection, quantity: Double) throws {
         
-        // is valid selection
+        // Is valid selection?
         guard var item = inventory[selection] else {
             throw VendingMachineError.InvalidSelection
         }
         
-        // is in stock
-        
+        // Is in stock?
         guard item.quantitiy > 0 else {
             throw VendingMachineError.OutOfStock
         }
@@ -147,8 +155,7 @@ class VendingMachine: VendingMachineType {
         
         let totalPrice = item.price * quantity
         
-        // have enough funds
-        
+        // Have enough funds?
         if amountDeposited >= totalPrice {
             amountDeposited -= totalPrice
             
@@ -168,6 +175,5 @@ class VendingMachine: VendingMachineType {
     func deposit(amount: Double) {
         amountDeposited += amount
     }
-    
 }
 
