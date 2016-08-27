@@ -170,6 +170,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func dismissAlert(sender: UIAlertAction) {
         reset()
     }
+
+    
+    @IBAction func depositFunds() {
+        
+        vendingMachine.deposit(5.00)
+        updateBalanceLabel()
+    }
     
     
 }

@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -46,6 +47,10 @@
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                 <color key="tintColor" red="0.96862745100000003" green="0.80000000000000004" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" title="Add $5"/>
+                                                <connections>
+                                                    <action selector="depositFunds" destination="BYZ-38-t0r" eventType="touchUpInside" id="wr1-OX-hLX"/>
+                                                    <segue destination="uNb-zj-AzZ" kind="presentation" id="PSC-ti-69h"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -182,6 +187,53 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1020" y="657"/>
+        </scene>
+        <!--Deposit Controller-->
+        <scene sceneID="eQt-uv-eW0">
+            <objects>
+                <viewController id="uNb-zj-AzZ" customClass="DepositController" customModule="VendingMachine" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4WL-qn-e4T"/>
+                        <viewControllerLayoutGuide type="bottom" id="nFM-v4-Bwz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="H4a-3D-jeN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t7F-vb-CvQ">
+                                <rect key="frame" x="0.0" y="544" width="600" height="56"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.80000000000000004" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="0GL-nH-CpU"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="56" id="Hm7-ki-qWe"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Dismiss"/>
+                                <connections>
+                                    <action selector="dismiss" destination="uNb-zj-AzZ" eventType="touchUpInside" id="aYc-3M-lD3"/>
+                                    <action selector="purchase" destination="BYZ-38-t0r" eventType="touchUpInside" id="eEY-hl-WDs"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Funds successfully added" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xbk-Y2-AYY">
+                                <rect key="frame" x="201" y="289" width="199" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1176470588" green="0.14117647059999999" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="t7F-vb-CvQ" secondAttribute="trailing" constant="-20" id="Ghq-zC-7Jg"/>
+                            <constraint firstItem="t7F-vb-CvQ" firstAttribute="leading" secondItem="H4a-3D-jeN" secondAttribute="leadingMargin" constant="-20" id="Uqd-ag-OQi"/>
+                            <constraint firstItem="xbk-Y2-AYY" firstAttribute="centerY" secondItem="H4a-3D-jeN" secondAttribute="centerY" id="W4M-yB-QPs"/>
+                            <constraint firstItem="nFM-v4-Bwz" firstAttribute="top" secondItem="t7F-vb-CvQ" secondAttribute="bottom" id="c9l-gb-2bg"/>
+                            <constraint firstItem="xbk-Y2-AYY" firstAttribute="centerX" secondItem="H4a-3D-jeN" secondAttribute="centerX" id="szH-Yv-EGU"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aII-q3-nsH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1781" y="657"/>
         </scene>
     </scenes>
     <resources>
